@@ -9,7 +9,7 @@ module.exports = {
         index: './src/index.js',
 
         // Console Application.
-        // projectsBoard: './src/backend/projectsBoard.js',
+        weatherConsole: './src/Console App/weatherConsole.js',
 
         // Utility files.
         // utilityFunctions: './src/resources/utitilityFunctions.js',
