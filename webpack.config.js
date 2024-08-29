@@ -11,11 +11,8 @@ module.exports = {
         // Console Application.
         weatherConsole: './src/Console App/weatherConsole.js',
 
-        // Utility files.
-        // utilityFunctions: './src/resources/utitilityFunctions.js',
-
         // Frontend files.
-        // loadProjects: './src/frontend/loadProjects.js'
+        weatherUI: './src/Frontend/weatherUI.js',
 
         // Decoupler (Link Btn console app and DOM).
         // decoupler: './src/front-back-link/decoupler.js',
