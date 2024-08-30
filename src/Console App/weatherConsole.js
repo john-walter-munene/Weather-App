@@ -1,4 +1,21 @@
+import { handleGetWeatherError, handleGetGifError } from "./errorHandler";
+
+async function getWeatherData(location) {
+    try {
+        const weatherResponse = await fetch(
+            `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=VCS46D95CZEECUCCK4GBF554A&contentType=json`, 
+            { mode: 'cors' }
+        );
+
+        const weatherData = await weatherResponse.json();
+        if (weatherData) return weatherData;
+    } catch (error) {
+        handleGetWeatherError(error);
+    }
+}
+
 async function getAppropriateWeatherGif(weatherData) {
+    if (weatherData === undefined) { console.log("No data for GIF"); return };
     // Get weather condition from weather data object.
     const weatherCondition = weatherData.days[0].conditions;
 
@@ -20,62 +37,37 @@ async function getAppropriateWeatherGif(weatherData) {
             throw new Error("Gif not found!");
         }
     } catch (error) {
-        console.log(error);
-        alert(error);
+        handleGetGifError(error);
     }
 }
 
-// getAppropriateWeatherGif('sunny');
-
-async function getWeatherData(location) {
-    try {
-        const weatherResponse = await fetch(
-            `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=VCS46D95CZEECUCCK4GBF554A&contentType=json`, 
-            { mode: 'cors' }
-        );
-
-        const weatherData = await weatherResponse.json();
-        if (weatherData) return weatherData;
-    } catch (error) {
-        console.log(error);
-        alert(error);
-    }
-}
 
 function createWeatherObject(weatherData) {
-    // console.log("called from weather Obj", weatherData);
+    if (weatherData === undefined) { console.log("No data for Object"); return };
 
     let temperature = weatherData.days[0].temp;
-    let weatherCondition = weatherData.days[0].conditions;
+    let weatherForecast = weatherData.days[0].conditions
     let WeatherDescription = weatherData.days[0].description;
+    let weatherSummary = weatherData.description;
     let weatherIcon = weatherData.days[0].icon;
-    let forecast = weatherData.description;
     let humidity = weatherData.days[0].humidity;
     let latitude = weatherData.latitude;
     let longitude = weatherData.longitude;
     let resolvedLocationName = weatherData.resolvedAddress;
+    let windSpeed = weatherData.days[0].windspeed;
 
     return { 
         temperature,
-        weatherCondition,
+        weatherForecast,
         WeatherDescription,
+        weatherSummary,
         weatherIcon,
-        forecast,
         humidity,
         latitude,
         longitude,
         resolvedLocationName,
-    };
+        windSpeed,
+    }
 }
 
-// getWeatherData('eldoret')
-//     .then(data => getAppropriateWeatherGif(data))
-//     .then(data => createWeatherObject(data))
-//     .then(data => addLatestSearchToStore(data));
-
-// getWeatherData('houston')
-//     .then(data => getAppropriateWeatherGif(data))
-//     .then(data => createWeatherObject(data))
-//     .then(data => addLatestSearchToStore(data));
-
-export { getWeatherData, getAppropriateWeatherGif, createWeatherObject }
+export { getWeatherData, getAppropriateWeatherGif, createWeatherObject, };

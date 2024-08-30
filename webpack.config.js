@@ -10,12 +10,14 @@ module.exports = {
 
         // Console Application.
         weatherConsole: './src/Console App/weatherConsole.js',
+        errorHandler: './src/Console App/errorHandler.js',
 
         // Frontend files.
         weatherUI: './src/Frontend/weatherUI.js',
+        loadingComponent: './src/Frontend/loadingComponent.js',
 
-        // Decoupler (Link Btn console app and DOM).
-        // decoupler: './src/front-back-link/decoupler.js',
+        // Resources
+        resources: './src/resources/utility.js',
     },
     devtool: "eval-source-map",
     devServer: {
