@@ -11,6 +11,7 @@ module.exports = {
         // Console Application.
         weatherConsole: './src/Console App/weatherConsole.js',
         errorHandler: './src/Console App/errorHandler.js',
+        storage: './src/Console App/storage.js',
 
         // Frontend files.
         weatherUI: './src/Frontend/weatherUI.js',

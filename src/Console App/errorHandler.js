@@ -3,6 +3,7 @@ import { removeLoadingComponent } from "../Frontend/loadingComponent";
 const weatherApplication = document.querySelector('.weather-app');
 
 function handleGetWeatherError(error) {
+    console.log(error);
 
     // Notify user about error.
     const loadingComponent = document.querySelector('.loading-component');
