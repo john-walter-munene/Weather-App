@@ -30,7 +30,7 @@ To run the Weather App locally:
 
 1. **Clone the Repository**:
    ```bash
-   git clone [repository-url]
+   git clone https://github.com/john-walter-munene/Weather-App/edit/main/README.md
    cd weather-app
    npm install
    ```
