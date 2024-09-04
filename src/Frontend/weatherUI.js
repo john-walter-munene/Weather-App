@@ -16,7 +16,6 @@ import {
 } from "../resources/utility";
 import {
   saveLatestStoreToLocalStorage,
-  loadLastSearchesFromLocalStorage,
 } from "../Console App/storage";
 
 // Get all DOM Elements.
@@ -41,9 +40,7 @@ const weatherSearchesStore = [];
 
 // Event Listeners
 searcherImage.addEventListener("click", handleSearchClick);
-toggleDetailsButton.addEventListener("click", () =>
-  updateToggleDetails(toggleDetailsButton)
-);
+toggleDetailsButton.addEventListener("click", () => updateToggleDetails(toggleDetailsButton));
 
 // Event Handlers
 function handleSearchClick() {
@@ -73,14 +70,14 @@ function updateToggleDetails(toggleDetailsButton) {
 // Core Functions
 function showTemperatureInFarenheit() {
   // Get right data and content holder.
-  const location = weatherSearchesStore[0].location;
+  const location = weatherSearchesStore[0].formattedLocation;
   const temperature = weatherSearchesStore[0].temperature;
 
   farenheitTempHolder.textContent = "";
 
   const farenheitTempText = document.createElement("p");
   farenheitTempText.textContent = `The temperature of ${location} is ${celsiusToFahrenheit(
-    temperature
+temperature
   ).toFixed(1)}°F`;
   toggleDetailsButton.textContent = "Hide Details";
 
@@ -131,35 +128,13 @@ function updateDisplayWithForecast(weatherObject) {
       latitudeDisplay.textContent = weatherObject.latitude;
       longitudeDisplay.textContent = weatherObject.longitude;
       animationsDisplay.src = weatherObject.weatherIcon;
-      locationDisplay.textContent = limitToTwoWords(
-        weatherObject.resolvedLocationName
-      );
+      locationDisplay.textContent = limitToTwoWords(weatherObject.resolvedLocationName);
       briefSummaryDisplay.textContent = weatherObject.weatherSummary;
       weatherForecastDisplay.textContent = weatherObject.weatherForecast;
-      weatherSearchIdentifier.textContent = `${
-        weatherObject.resolvedLocationName
-      }, ${getDayDateAndTime()}`;
+      weatherSearchIdentifier.textContent = `${weatherObject.resolvedLocationName}, ${getDayDateAndTime()}`;
       fullSummaryDisplay.textContent = weatherObject.WeatherDescription;
       toggleDetailsButton.style.display = "block";
-
-      // Clear the old searches display
-      latestSearchesDisplay.innerHTML = "";
-
-      // Update the latest searches display
-      weatherSearchesStore.forEach((weatherItem) => {
-        const { temperature, formattedLocation } = weatherItem;
-        const temperatureLocationHolder = document.createElement("div");
-        const temperatureText = document.createElement("p");
-        const locationText = document.createElement("p");
-
-        temperatureText.textContent = `${temperature}°C`;
-        locationText.textContent = limitToTwoWords(formattedLocation);
-
-        temperatureLocationHolder.append(temperatureText, locationText);
-        latestSearchesDisplay.appendChild(temperatureLocationHolder);
-      });
-
-      console.log("Updated display with the latest forecasts.");
+      updateLatestSearches();
     }
   } catch (error) {
     console.log("Error updating display:", error);
@@ -183,4 +158,20 @@ function clearOldContent() {
   latestSearchesDisplay.innerHTML = "";
 }
 
-export { weatherSearchesStore };
+function updateLatestSearches() {
+   // Update the latest searches display
+   weatherSearchesStore.forEach((weatherItem) => {
+    const { temperature, formattedLocation } = weatherItem;
+    const temperatureLocationHolder = document.createElement("div");
+    const temperatureText = document.createElement("p");
+    const locationText = document.createElement("p");
+
+    temperatureText.textContent = `${temperature}°C`;
+    locationText.textContent = limitToTwoWords(formattedLocation);
+
+    temperatureLocationHolder.append(temperatureText, locationText);
+    latestSearchesDisplay.appendChild(temperatureLocationHolder);
+  });
+}
+
+export { weatherSearchesStore, updateLatestSearches };

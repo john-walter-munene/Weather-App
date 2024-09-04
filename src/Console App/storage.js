@@ -14,7 +14,6 @@ function loadLastSearchesFromLocalStorage(weatherStore) {
     if (weatherData && weatherData.length > 0) {
         weatherStore.length = 0; // Clear the existing array
         weatherStore.push(...weatherData); // Add new data
-        console.log(weatherStore);
     }
 }
 
