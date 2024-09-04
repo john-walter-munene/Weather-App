@@ -2,30 +2,19 @@
 import "./resources/styless.css";
 import "./Frontend/weatherUI.js";
 import { loadLastSearchesFromLocalStorage } from "./Console App/storage";
-import { limitToTwoWords } from "./resources/utility";
-import { weatherSearchesStore } from "./Frontend/weatherUI";
+import { updateAppDayDateTime } from "./resources/utility";
+import { updateLatestSearches, weatherSearchesStore } from "./Frontend/weatherUI";
 
 function initializePage() {
+ 
+  updateAppDayDateTime();
+  // Load latest searches from board and update display.
   const latestSearchesDisplay = document.querySelector(".last-searches");
   latestSearchesDisplay.textContent = "";
-
   loadLastSearchesFromLocalStorage(weatherSearchesStore);
-  weatherSearchesStore.forEach((weatherItem) => {
-    const { temperature, formattedLocation } = weatherItem;
-
-    const temperatureLocationHolder = document.createElement("div");
-    const temperatureText = document.createElement("p");
-    const locationText = document.createElement("p");
-
-    temperatureText.textContent = `${temperature}°C`;
-    locationText.textContent = limitToTwoWords(formattedLocation);
-
-    temperatureLocationHolder.append(temperatureText, locationText);
-    latestSearchesDisplay.appendChild(temperatureLocationHolder);
-  });
+  updateLatestSearches()
   console.log("loaded");
 }
 
 // Call initializePage when the DOM is fully loaded
-
 addEventListener("DOMContentLoaded", initializePage());

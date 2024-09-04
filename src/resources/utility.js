@@ -16,4 +16,13 @@ function celsiusToFahrenheit(celsius) {
   return (celsius * 1.8) + 32;
 }
 
-export { limitToTwoWords, getDayDateAndTime, celsiusToFahrenheit };
+function updateAppDayDateTime() {
+   // Update app with latest time on load.
+   const weatherSearchIdentifier = document.querySelector(".identifier");
+   const splitDefaultIdentifierText = weatherSearchIdentifier.textContent.split(', ');
+   const updatedIdentifierText = `${splitDefaultIdentifierText[0]} ${getDayDateAndTime()}`;
+   weatherSearchIdentifier.textContent = '';
+   weatherSearchIdentifier.textContent = updatedIdentifierText;
+}
+
+export { limitToTwoWords, getDayDateAndTime, celsiusToFahrenheit, updateAppDayDateTime };
